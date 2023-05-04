@@ -267,6 +267,13 @@ function combineDishes(arrayOfDishes) { // Using join()
     console.log(stringOfDishes);
 }
 
+function getServingCount(arrayOfDishes){
+    let servingCount = arrayOfDishes.reduce(function (totalServings, dish) {
+        return totalServings + dish.servings;
+    }, 0);
+    alert("Found total serving count!  Check the console for full output.")
+    return `Total servings: ${servingCount}`;
+}
 // <<<<<<<<<<<<<<<<< MAIN MENU FUNCTION <<<<<<<<<<<<<<<<<
 
 function runApp(allDishes, specialDish) {
@@ -279,7 +286,8 @@ function runApp(allDishes, specialDish) {
     Press 5 to see a list of cuisines & dish names.
     Press 6 to send a marketing text message for Today's Special Dish.
     Press 7 to send a marketing email message for Today's Special Dish.
-    Enter "Exit" to quit the application.`, ["1", "2", "3", "4", "5", "6", "7", "exit"])
+    Press 8 to see the total servings for all dishes.
+    Enter "Exit" to quit the application.`, ["1", "2", "3", "4", "5", "6", "7", "8", "exit"])
     // Changed Exit to lowercase to match change in customPrompt()
     // Adjusted first line, so all lines are same indentation level
     switch (userChoice) {
@@ -310,6 +318,10 @@ function runApp(allDishes, specialDish) {
         case "7":
             let emailDailyDish = generateMarketingMessage(specialDish, emailMessage);
             console.log(emailDailyDish);
+            break
+        case "8":
+            let totalServings = getServingCount(allDishes);
+            console.log(totalServings);
             break
         case "Exit":
             alert("Thank you for using the Recipe Searching Application!  Goodbye!")
