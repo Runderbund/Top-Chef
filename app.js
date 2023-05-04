@@ -152,7 +152,8 @@ function findItalianFood(allDishes) {
 
 function searchCuisines(allDishes) {
     // alert("Searching for dishes by cuisine...") // Unnecessary alert 
-    let cuisineType = customPrompt(`Enter a cuisine type to search for:
+    let cuisineType = customPrompt(`
+    Enter a cuisine type to search for:
     (French, Hungarian, Irish, Italian, Mexican, or Vegetarian)`, ["french", "hungarian", "irish", "italian", "mexican", "vegetarian"]);
     let foodList = allDishes.filter(function (dish) {
         if (dish.cuisine.toLowerCase() === cuisineType.toLowerCase()) {
@@ -167,7 +168,8 @@ function searchCuisines(allDishes) {
 
 function searchIngredients(allDishes) {
     // alert("Searching for dishes by ingredient...")
-    let ingredient = customPrompt(`Enter an ingredient to search for:
+    let ingredient = customPrompt(`
+    Enter an ingredient to search for:
     (beef, cabbage, cheese, chickpea, corn, flour,  parsley, sugar, or tomato)`, ["beef", "cabbage", "cheese", "chickpea", "corn", "flour", "parsley", "sugar", "tomato"]);
     ingredient = ingredient.toLowerCase();
     let foodList = allDishes.filter(function (dish) {
@@ -193,16 +195,14 @@ function generateCuisineDishName(allDishes) {
 // <<<<<<<<<<<<<<<<< EMAIL AND TEXT MARKETING MESSAGES <<<<<<<<<<<<<<<<<
 
 function emailMessage(dishOfTheDay) {
-    // This way only works for 2 ingredients. Generalize.
+    
     let message = `
     Hello valued customer!
 
     Thank you for subscribing to email alert messages!
     Today's Dish of the day is:
 
-    ${dishOfTheDay.cuisine} ${dishOfTheDay.name}
-    It serves ${dishOfTheDay.servings} people.
-    The ingredients are ${dishOfTheDay.ingredients[0]} and ${dishOfTheDay.ingredients[1]}.
+    ${combineAttributes(dishOfTheDay)}
 
     We hope to see you in soon!
 
@@ -213,6 +213,11 @@ function emailMessage(dishOfTheDay) {
     `;
 
     return message;
+
+    //Prior
+    // ${dishOfTheDay.cuisine} ${dishOfTheDay.name}
+    // It serves ${dishOfTheDay.servings} people.
+    // The ingredients are ${dishOfTheDay.ingredients[0]} and ${dishOfTheDay.ingredients[1]}.
 }
 
 function textMessage(dishOfTheDay) {
@@ -222,9 +227,7 @@ function textMessage(dishOfTheDay) {
     This is an automated text message alert.
     Today's Dish of the day is:
 
-    ${dishOfTheDay.cuisine} ${dishOfTheDay.name}
-    It serves ${dishOfTheDay.servings} people.
-    The ingredients are ${dishOfTheDay.ingredients[0]} and ${dishOfTheDay.ingredients[1]}.
+    ${combineAttributes(dishOfTheDay)}
 
     We hope to see you in soon!
 
@@ -248,7 +251,6 @@ function generateMarketingMessage(dishOfTheDay, messageTypeCallback) {
 // <<<<<<<<<<<<<<<<< CUSTOM PROMPT FUNCTION <<<<<<<<<<<<<<<<<
 
 function customPrompt(promptQuestion, arrayOfValidResponses) {
-    // TODO #10: Replace all instances of prompt() in the above functions with customPrompt()
     let response = ""; // Setting a value to allow .toLowerCase() to be called on it
     while (!arrayOfValidResponses.includes(response.toLowerCase())) { // Case insensitive now
         response = prompt(promptQuestion);
@@ -256,11 +258,22 @@ function customPrompt(promptQuestion, arrayOfValidResponses) {
     return response;
 }
 
+function combineAttributes(dish) {
+    // This way only works for 2 ingredients. Generalize.
+    return `
+    ID: ${dish.id}
+    Name: ${dish.name}
+    Cuisine: ${dish.cuisine}
+    Servings: ${dish.servings}
+    Ingredients: ${dish.ingredients[0]} and ${dish.ingredients[1]}`;
+}
+
 // <<<<<<<<<<<<<<<<< MAIN MENU FUNCTION <<<<<<<<<<<<<<<<<
 
 function runApp(allDishes, specialDish) {
     alert("Welcome to the Recipe Searching Application!")
-    let userChoice = customPrompt(`Press 1 to search for Mexican dishes.
+    let userChoice = customPrompt(`
+    Press 1 to search for Mexican dishes.
     Press 2 to search for Italian dishes.    
     Press 3 to search for dishes by cuisine.
     Press 4 to search for dishes by ingredient.
@@ -269,6 +282,7 @@ function runApp(allDishes, specialDish) {
     Press 7 to send a marketing email message for Today's Special Dish.
     Enter "Exit" to quit the application.`, ["1", "2", "3", "4", "5", "6", "7", "exit"])
     // Changed Exit to lowercase to match change in customPrompt()
+    // Adjusted first line, so all lines are same indentation level
     switch (userChoice) {
         case "1":
             let mexicanDishes = findMexicanFood(allDishes)
