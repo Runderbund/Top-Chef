@@ -12,10 +12,6 @@
     10. Refactor the existing uses of prompt() to use customPrompt()
 */
 
-
-// TODO
-// Make searches case insensitive
-
 let dishes = [
     {
         id: 1,
@@ -156,15 +152,14 @@ function findItalianFood(allDishes) {
 
 function searchCuisines(allDishes) {
     // alert("Searching for dishes by cuisine...") // Unnecessary alert 
-    let cuisineType = prompt("Enter a cuisine type to search for: ")
+    let cuisineType = customPrompt(`Enter a cuisine type to search for:
+    (French, Hungarian, Irish, Italian, Mexican, or Vegetarian)`, ["french", "hungarian", "irish", "italian", "mexican", "vegetarian"]);
     let foodList = allDishes.filter(function (dish) {
         if (dish.cuisine.toLowerCase() === cuisineType.toLowerCase()) {
             return true;
         } else {
             return false;
         }
-        //Could replace the above 5 line with
-        //return dish.cuisine.toLowerCase() === cuisineType.toLowerCase();
     });
     alert("Found all dishes matching the cuisine search term!  Check the console for full output")
     return foodList;
@@ -272,7 +267,8 @@ function runApp(allDishes, specialDish) {
     Press 5 to see a list of cuisines & dish names.
     Press 6 to send a marketing text message for Today's Special Dish.
     Press 7 to send a marketing email message for Today's Special Dish.
-    Enter "Exit" to quit the application.`, ["1", "2", "3", "4", "5", "6", "7", "Exit"])
+    Enter "Exit" to quit the application.`, ["1", "2", "3", "4", "5", "6", "7", "exit"])
+    // Changed Exit to lowercase to match change in customPrompt()
     switch (userChoice) {
         case "1":
             let mexicanDishes = findMexicanFood(allDishes)
