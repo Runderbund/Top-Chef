@@ -1,17 +1,3 @@
-/* 
-<<<<<<<<<<<<<<<<< TODO Task List <<<<<<<<<<<<<<<<<
-    1. Start the application by opening index.html in your browser, and use your debugger to step through the completed findMexicanFood() function
-    2. Complete the findItalianFood() function
-    3. Complete the searchCuisines() function
-    4. Complete the searchIngredients() function
-    5. Complete the generateCuisineDishName() function
-    6. Adjust the emailMessage() and textMessage() functions so the cuisine and dish name are included in the message
-    7. Complete the generateMarketingMessage() function
-    8. Call the appropriate function in runApp() to generate a marketing text message
-    9. Call the appropriate function in runApp() to generate a marketing email message
-    10. Refactor the existing uses of prompt() to use customPrompt()
-*/
-
 let dishes = [
     {
         id: 1,
@@ -256,7 +242,7 @@ function customPrompt(promptQuestion, arrayOfValidResponses) {
         response = prompt(promptQuestion);
     }
     return response;
-}
+} 
 
 function combineAttributes(dish) {
     // This way only works for 2 ingredients. Generalize.
@@ -266,6 +252,19 @@ function combineAttributes(dish) {
     Cuisine: ${dish.cuisine}
     Servings: ${dish.servings}
     Ingredients: ${dish.ingredients[0]} and ${dish.ingredients[1]}`;
+}
+
+function combineStrings(arrayOfStrings) { // Using a for loop
+    let combinedString = "";
+    for (let i = 0; i < arrayOfStrings.length; i++) {
+        combinedString += arrayOfStrings[i] + "\n";
+    }
+    console.log(combinedString);
+}
+
+function combineDishes(arrayOfDishes) { // Using join()
+    let stringOfDishes = arrayOfDishes.map(combineAttributes).join("\n");
+    console.log(stringOfDishes);
 }
 
 // <<<<<<<<<<<<<<<<< MAIN MENU FUNCTION <<<<<<<<<<<<<<<<<
@@ -286,23 +285,23 @@ function runApp(allDishes, specialDish) {
     switch (userChoice) {
         case "1":
             let mexicanDishes = findMexicanFood(allDishes)
-            console.log(mexicanDishes)
+            combineDishes(mexicanDishes)
             break
         case "2":
             let italianDishes = findItalianFood(allDishes)
-            console.log(italianDishes)
+            combineDishes(italianDishes)
             break
         case "3":
             let cuisineSearchResults = searchCuisines(allDishes)
-            console.log(cuisineSearchResults)
+            combineDishes(cuisineSearchResults)
             break
         case "4":
             let ingredientSearchResults = searchIngredients(allDishes)
-            console.log(ingredientSearchResults)
+            combineDishes(ingredientSearchResults)
             break
         case "5":
             let concatenatedDishes = generateCuisineDishName(allDishes)
-            console.log(concatenatedDishes)
+            combineStrings(concatenatedDishes)
             break
         case "6":
             let textDailyDish = generateMarketingMessage(specialDish, textMessage);
