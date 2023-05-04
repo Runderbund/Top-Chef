@@ -199,11 +199,6 @@ function emailMessage(dishOfTheDay) {
     `;
 
     return message;
-
-    //Prior
-    // ${dishOfTheDay.cuisine} ${dishOfTheDay.name}
-    // It serves ${dishOfTheDay.servings} people.
-    // The ingredients are ${dishOfTheDay.ingredients[0]} and ${dishOfTheDay.ingredients[1]}.
 }
 
 function textMessage(dishOfTheDay) {
@@ -245,7 +240,6 @@ function customPrompt(promptQuestion, arrayOfValidResponses) {
 } 
 
 function combineAttributes(dish) {
-    // This way only works for 2 ingredients. Generalize.
     return `
     ID: ${dish.id}
     Name: ${dish.name}
