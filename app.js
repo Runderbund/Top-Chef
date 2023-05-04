@@ -12,6 +12,10 @@
     10. Refactor the existing uses of prompt() to use customPrompt()
 */
 
+
+// TODO
+// Make searches case insensitive
+
 let dishes = [
     {
         id: 1,
@@ -131,10 +135,6 @@ function findMexicanFood(allDishes) {
             return false;
         }
     });
-    // TODO #1: Step through this function with the debugger to get a better understanding of the structure of this function
-
-    // Debug tip: Place a Breakpoint on the alert AFTER the filter, then hover over "results" to see results of filter 
-    // without having to step through the whole thing!
     alert("Found all Mexican dishes!  Check the console for full output.")
     return results
 }
@@ -143,26 +143,52 @@ function findMexicanFood(allDishes) {
 
 function findItalianFood(allDishes) {
     alert("Searching for Italian dishes...")
-    // TODO #2: Filter all dishes for those that have a cuisine type of Italian
+    let italianFood = allDishes.filter(function (dish) {
+        if (dish.cuisine === "Italian") {
+            return true;
+        } else {
+            return false;
+        }
+    });
     alert("Found all Italian dishes!  Check the console for full output")
+    return italianFood;
 }
 
 function searchCuisines(allDishes) {
     alert("Searching for dishes by cuisine...")
-    // TODO #3: Gather user input for a cuisine to search for, then filter for all dishes matching this cuisine type
+    let cuisineType = prompt("Enter a cuisine type to search for: ")
+    let foodList = allDishes.filter(function (dish) {
+        if (dish.cuisine === cuisineType) {
+            return true;
+        } else {
+            return false;
+        }
+    });
     alert("Found all dishes matching the cuisine search term!  Check the console for full output")
+    return foodList;
 }
 
 function searchIngredients(allDishes) {
     alert("Searching for dishes by ingredient...")
-    // TODO #4: Gather user input for an ingredient to search for, then filter for all dishes that INCLUDE this ingredient in their ingredients array property
+    let ingredient = prompt("Enter an ingredient to search for: ")
+    let foodList = allDishes.filter(function (dish) {
+        if (dish.ingredients.includes(ingredient)) {
+            return true;
+        } else {
+            return false;
+        }
+    });
     alert("Found all dishes that contain the ingredient search term!  Check the console for full output")
+    return foodList;
 }
 
 function generateCuisineDishName(allDishes) {
     alert("Combining cuisine and dish names...")
-    // TODO #5: Apply the concatenatorFunction to each dish in allDishes, then log to the console the modified result
+    let cuisineDish = allDishes.map(function (dish) {
+        return dish.cuisine + " " + dish.name;
+    });
     alert("Successfully combined cuisine and dish names!  Check the console for full output.")
+    return cuisineDish;
 }
 
 // <<<<<<<<<<<<<<<<< EMAIL AND TEXT MARKETING MESSAGES <<<<<<<<<<<<<<<<<
