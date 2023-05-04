@@ -155,7 +155,7 @@ function findItalianFood(allDishes) {
 }
 
 function searchCuisines(allDishes) {
-    alert("Searching for dishes by cuisine...")
+    // alert("Searching for dishes by cuisine...") // Unnecessary alert 
     let cuisineType = prompt("Enter a cuisine type to search for: ")
     let foodList = allDishes.filter(function (dish) {
         if (dish.cuisine.toLowerCase() === cuisineType.toLowerCase()) {
@@ -171,8 +171,10 @@ function searchCuisines(allDishes) {
 }
 
 function searchIngredients(allDishes) {
-    alert("Searching for dishes by ingredient...")
-    let ingredient = prompt("Enter an ingredient to search for: ").toLowerCase();
+    // alert("Searching for dishes by ingredient...")
+    let ingredient = customPrompt(`Enter an ingredient to search for:
+    (beef, cabbage, cheese, chickpea, corn, flour,  parsley, sugar, or tomato)`, ["beef", "cabbage", "cheese", "chickpea", "corn", "flour", "parsley", "sugar", "tomato"]);
+    ingredient = ingredient.toLowerCase();
     let foodList = allDishes.filter(function (dish) {
         if (dish.ingredients.includes(ingredient)) {
             return true;
@@ -252,11 +254,11 @@ function generateMarketingMessage(dishOfTheDay, messageTypeCallback) {
 
 function customPrompt(promptQuestion, arrayOfValidResponses) {
     // TODO #10: Replace all instances of prompt() in the above functions with customPrompt()
-    let response
-    while (!arrayOfValidResponses.includes(response)) {
-        response = prompt(promptQuestion)
+    let response = ""; // Setting a value to allow .toLowerCase() to be called on it
+    while (!arrayOfValidResponses.includes(response.toLowerCase())) { // Case insensitive now
+        response = prompt(promptQuestion);
     }
-    return response
+    return response;
 }
 
 // <<<<<<<<<<<<<<<<< MAIN MENU FUNCTION <<<<<<<<<<<<<<<<<
