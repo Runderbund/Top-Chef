@@ -158,11 +158,13 @@ function searchCuisines(allDishes) {
     alert("Searching for dishes by cuisine...")
     let cuisineType = prompt("Enter a cuisine type to search for: ")
     let foodList = allDishes.filter(function (dish) {
-        if (dish.cuisine === cuisineType) {
+        if (dish.cuisine.toLowerCase() === cuisineType.toLowerCase()) {
             return true;
         } else {
             return false;
         }
+        //Could replace the above 5 line with
+        //return dish.cuisine.toLowerCase() === cuisineType.toLowerCase();
     });
     alert("Found all dishes matching the cuisine search term!  Check the console for full output")
     return foodList;
@@ -170,7 +172,7 @@ function searchCuisines(allDishes) {
 
 function searchIngredients(allDishes) {
     alert("Searching for dishes by ingredient...")
-    let ingredient = prompt("Enter an ingredient to search for: ")
+    let ingredient = prompt("Enter an ingredient to search for: ").toLowerCase();
     let foodList = allDishes.filter(function (dish) {
         if (dish.ingredients.includes(ingredient)) {
             return true;
@@ -194,14 +196,16 @@ function generateCuisineDishName(allDishes) {
 // <<<<<<<<<<<<<<<<< EMAIL AND TEXT MARKETING MESSAGES <<<<<<<<<<<<<<<<<
 
 function emailMessage(dishOfTheDay) {
-    // TODO #6: Adjust the message below so the cuisine and name of the dish are displayed
+    // This way only works for 2 ingredients. Generalize.
     let message = `
     Hello valued customer!
 
     Thank you for subscribing to email alert messages!
     Today's Dish of the day is:
 
-    <DISH OF THE DAY HERE>
+    ${dishOfTheDay.cuisine} ${dishOfTheDay.name}
+    It serves ${dishOfTheDay.servings} people.
+    The ingredients are ${dishOfTheDay.ingredients[0]} and ${dishOfTheDay.ingredients[1]}.
 
     We hope to see you in soon!
 
@@ -215,14 +219,15 @@ function emailMessage(dishOfTheDay) {
 }
 
 function textMessage(dishOfTheDay) {
-    // TODO #6: Adjust the message below so the cuisine and name of the dish are displayed
     let message = `
     Master Chef -
 
     This is an automated text message alert.
     Today's Dish of the day is:
 
-    <DISH OF THE DAY HERE>
+    ${dishOfTheDay.cuisine} ${dishOfTheDay.name}
+    It serves ${dishOfTheDay.servings} people.
+    The ingredients are ${dishOfTheDay.ingredients[0]} and ${dishOfTheDay.ingredients[1]}.
 
     We hope to see you in soon!
 
@@ -237,9 +242,10 @@ function textMessage(dishOfTheDay) {
 
 function generateMarketingMessage(dishOfTheDay, messageTypeCallback) {
     alert('Sending final message to all 389 customers...')
-    // TODO #7: Call the passed-in callback function on the dishOfTheDay.  Save the result as a variable
-    // Then, log that result to the console
+
+    let message = messageTypeCallback(dishOfTheDay);
     alert('Success!  Check the console for a copy of the final marketing message!')
+    return message
 }
 
 // <<<<<<<<<<<<<<<<< CUSTOM PROMPT FUNCTION <<<<<<<<<<<<<<<<<
@@ -287,12 +293,12 @@ function runApp(allDishes, specialDish) {
             console.log(concatenatedDishes)
             break
         case "6":
-            // TODO #8: Call the appropriate function to generate the marketing text message.  
-            // You will need to provide today's dish and the appropriate callback function as arguments!
+            let textDailyDish = generateMarketingMessage(specialDish, textMessage);
+            console.log(textDailyDish);
             break
         case "7":
-            // TODO #9: Call the appropriate function to generate the marketing email message.  
-            // You will need to provide today's dish and the appropriate callback function as arguments!
+            let emailDailyDish = generateMarketingMessage(specialDish, emailMessage);
+            console.log(emailDailyDish);
             break
         case "Exit":
             alert("Thank you for using the Recipe Searching Application!  Goodbye!")
